@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 // import { useHistory } from "react-router";
 import "./styles.scss";
 import { Container } from "../components/container/container";
-import { Product } from "../components/addForm/addForm";
+import { AddForm } from "../components/addForm/addForm";
 
 export const AddProduct = function () {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export const AddProduct = function () {
       </header>
       <main>
         <Container>
-          <Product />
+          <AddForm />
         </Container>
       </main>
     </>

@@ -70,7 +70,7 @@ export class ProductList extends React.Component {
                     sku={product.sku}
                     name={product.name}
                     price={product.price}
-                    option={product.option}
+                    type={product.type}
                     value={product.value}
                   />
                 ))

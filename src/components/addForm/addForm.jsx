@@ -8,7 +8,7 @@ import Furniture from "../furniture/furniture";
 import s from "./addForm.module.scss";
 const history = createBrowserHistory();
 
-export class Product extends Component {
+export class AddForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -150,7 +150,7 @@ export class Product extends Component {
         )}
         {this.state.productType === "Furniture" && (
           <Furniture
-            value={this.state.optionValue}
+            // value={this.state.optionValue}
             onChange={this.handleInputMultipleParams}
           />
         )}

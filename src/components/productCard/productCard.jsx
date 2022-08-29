@@ -6,7 +6,7 @@ const Block = styled.div`
   width: 200px;
   height: 200px;
   background-color: grey;
-  font-size: 20px;
+  font-size: 14px;
   margin-left: 20px;
   margin-top: 20px;
   padding: 30px;
@@ -23,18 +23,9 @@ const TextWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 `;
 export class ProductCard extends React.Component {
-  constructor(props) {
-    super(props);
-
-    // this.isChecked = props.isChecked;
-    this.sku = props.sku;
-    this.name = props.name;
-    this.price = props.price;
-    this.option = props.option;
-    this.value = props.value;
-  }
   render() {
     return (
       <Block>
@@ -46,11 +37,17 @@ export class ProductCard extends React.Component {
           id="delete-checkbox"
         />
         <TextWrapper>
-          <p> {this.sku}</p>
-          <p> {this.name}</p>
-          <p>{this.price} $</p>
+          <p>Sku: {this.props.sku}</p>
+          <p>Name: {this.props.name}</p>
+          <p>Price: {this.props.price} $</p>
+          <br />
           <p>
-            {this.option} {this.value}
+            {this.props.type === "DVD"
+              ? "Size"
+              : this.props.type === "Book"
+              ? "Weight"
+              : "Dimensions:"}{" "}
+            {this.props.value}
           </p>
         </TextWrapper>
       </Block>
