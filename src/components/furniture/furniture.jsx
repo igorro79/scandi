@@ -12,7 +12,6 @@ function Furniture({ value, onChange } = {}) {
           min={1}
           required
           type="number"
-          // onkeydown="return event.keyCode !== 69 && event.keyCode !== 187 && event.keyCode !== 189"
           value={value?.height}
           onChange={onChange}
         />
@@ -25,7 +24,6 @@ function Furniture({ value, onChange } = {}) {
           required
           pattern="^\d{0,2}(\.\d{1,2})?$"
           type="number"
-          // onkeydown="return event.keyCode !== 69 && event.keyCode !== 187 && event.keyCode !== 189"
           value={value?.width}
           onChange={onChange}
         />
@@ -33,11 +31,10 @@ function Furniture({ value, onChange } = {}) {
       <label>
         {"Length (CM)   "}
         <input
-          id="lenght"
+          id="length"
           min={1}
           required
           type="number"
-          // onkeydown="return event.keyCode !== 69 && event.keyCode !== 187 && event.keyCode !== 189"
           value={value?.lenght}
           onChange={onChange}
         />

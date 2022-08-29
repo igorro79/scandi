@@ -33,7 +33,7 @@ export class Product extends Component {
 
     const formatValue =
       this.state.productType === "Furniture"
-        ? `${this.state.optionValue.height}x${this.state.optionValue.width}x${this.state.optionValue.lenght}`
+        ? `${Object.values(this.state.optionValue).join("x")}`
         : `${Object.values(this.state.optionValue)}`;
 
     addProduct({
@@ -45,10 +45,12 @@ export class Product extends Component {
     });
     history.back();
   };
+
   handleSelect = (e) => {
     this.setState({ [e.target.id]: e.target.value });
     this.setState({ optionValue: "" });
   };
+
   handleInput = (event) => {
     const name = event.target.id;
     if (name === "sku" && this.state.sameSkuError) {
@@ -60,6 +62,7 @@ export class Product extends Component {
     const value = event.target.value;
     this.setState({ [name]: value });
   };
+
   handleInputMultipleParams = (event) => {
     const optionName = event.target.id;
     const optionValue = event.target.value;
