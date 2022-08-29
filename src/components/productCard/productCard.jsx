@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 const Block = styled.div`
   position: relative;
-  width: 350px;
-  height: 350px;
+  width: 200px;
+  height: 200px;
   background-color: grey;
-  font-size: 30px;
+  font-size: 20px;
   margin-left: 20px;
   margin-top: 20px;
   padding: 30px;
@@ -27,6 +27,8 @@ const TextWrapper = styled.div`
 export class ProductCard extends React.Component {
   constructor(props) {
     super(props);
+
+    // this.isChecked = props.isChecked;
     this.sku = props.sku;
     this.name = props.name;
     this.price = props.price;
@@ -36,7 +38,13 @@ export class ProductCard extends React.Component {
   render() {
     return (
       <Block>
-        <Input type="checkbox" className="delete-checkbox" />
+        <Input
+          type="checkbox"
+          checked={this.props.isChecked}
+          onChange={() => this.props.onChange(this.props.id)}
+          className="delete-checkbox"
+          id="delete-checkbox"
+        />
         <TextWrapper>
           <p> {this.sku}</p>
           <p> {this.name}</p>

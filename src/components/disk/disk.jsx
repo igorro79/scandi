@@ -6,11 +6,12 @@ function Disk(props) {
     <div>
       <p className={s.optionsTitle}>Please provide size</p>
       <label>
-        Size (MB) 
+        Size (MB)
         <input
           id="size"
           min={1}
           type="number"
+          required
           value={props?.value}
           onChange={props?.onChange}
         />

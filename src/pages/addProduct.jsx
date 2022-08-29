@@ -7,12 +7,6 @@ import { Product } from "../components/addForm/addForm";
 export const AddProduct = function () {
   const navigate = useNavigate();
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    console.log(e);
-    // navigate("/");
-  };
-
   const handleCancel = () => {
     navigate("/");
   };
@@ -30,14 +24,14 @@ export const AddProduct = function () {
                 className="button"
                 // onClick={handleSave}
               >
-                SAVE
+                Save
               </button>
               <button
                 type="button"
                 className="button red"
                 onClick={handleCancel}
               >
-                CANCEL
+                Cancel
               </button>
             </div>
           </div>

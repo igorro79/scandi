@@ -1,8 +1,12 @@
 import React, { Component } from "react";
+import { createBrowserHistory } from "history";
+import { addProduct, fetchData } from "../../api/productApi";
+
 import Book from "../book/book";
 import Disk from "../disk/disk";
 import Furniture from "../furniture/furniture";
 import s from "./addForm.module.scss";
+const history = createBrowserHistory();
 
 export class Product extends Component {
   constructor(props) {
@@ -13,32 +17,63 @@ export class Product extends Component {
       price: "",
       productType: "",
       optionValue: "",
-      option: "",
-      size: "",
+      priceError: false,
+      sameSkuError: false,
+      data: [],
     };
   }
+
   onSubmit = (e) => {
     e.preventDefault();
-    console.log({ name: this.state.name, price: this.state.price });
+    if (this.state.data.some((item) => item.sku === this.state.sku)) {
+      this.setState({ sameSkuError: true });
+      return;
+    }
+    if (this.state.price <= 0) this.setState({ priceError: true });
+
+    const formatValue =
+      this.state.productType === "Furniture"
+        ? `${this.state.optionValue.height}x${this.state.optionValue.width}x${this.state.optionValue.lenght}`
+        : `${Object.values(this.state.optionValue)}`;
+
+    addProduct({
+      sku: this.state.sku,
+      name: this.state.name,
+      price: this.state.price,
+      type: this.state.productType,
+      value: formatValue,
+    });
+    history.back();
+  };
+  handleSelect = (e) => {
+    this.setState({ [e.target.id]: e.target.value });
+    this.setState({ optionValue: "" });
   };
   handleInput = (event) => {
-    this.setState({
-      size: "",
-      weight: "",
-      height: "",
-      width: "",
-      length: "",
-    });
-
     const name = event.target.id;
+    if (name === "sku" && this.state.sameSkuError) {
+      this.setState({ sameSkuError: false });
+    }
+    if (name === "price" && this.state.priceError) {
+      this.setState({ priceError: false });
+    }
     const value = event.target.value;
     this.setState({ [name]: value });
-    console.log(this);
+  };
+  handleInputMultipleParams = (event) => {
+    const optionName = event.target.id;
+    const optionValue = event.target.value;
+    this.setState((prev) => {
+      prev.optionValue = { ...prev.optionValue, [optionName]: optionValue };
+    });
   };
 
+  async componentDidMount() {
+    const data = await fetchData();
+    this.setState({ data: data.data });
+  }
+
   render() {
-    const currentType = this.state.productType;
-    console.log(currentType);
     return (
       <form id="product_form" onSubmit={this.onSubmit}>
         <div className={s.columnWrapper}>
@@ -53,6 +88,9 @@ export class Product extends Component {
               value={this.state.sku}
               onChange={this.handleInput}
             />
+            {this.state.sameSkuError && (
+              <p className={s.priceError}>This SKU already exist!</p>
+            )}
           </label>
           <label>
             {"NAME "}
@@ -74,7 +112,10 @@ export class Product extends Component {
               min={0}
               value={this.state.price}
               onChange={this.handleInput}
-            />
+            />{" "}
+            {this.state.priceError && (
+              <p className={s.priceError}> Price most be more than 0</p>
+            )}
           </label>
         </div>
         <span>Type Switcher </span>
@@ -82,26 +123,33 @@ export class Product extends Component {
           required="required"
           id="productType"
           defaultValue={""}
-          onChange={this.handleInput}
+          onChange={this.handleSelect}
         >
           <option disabled="disabled" value={""}>
             Choose Type...
           </option>
-          <option id="DVD" value={"disk"}>
+          <option id="DVD" value={"DVD"}>
             DVD-Disk
           </option>
-          <option id="Book" value={"book"}>
+          <option id="Book" value={"Book"}>
             Book
           </option>
-          <option id="Furniture" value={"furniture"}>
+          <option id="Furniture" value={"Furniture"}>
             Furniture
           </option>
         </select>
 
-        {currentType === "disk" && <Disk onChange={this.handleInput} />}
-        {currentType === "book" && <Book onChange={this.handleInput} />}
-        {currentType === "furniture" && (
-          <Furniture onChange={this.handleInput} />
+        {this.state.productType === "DVD" && (
+          <Disk onChange={this.handleInputMultipleParams} />
+        )}
+        {this.state.productType === "Book" && (
+          <Book onChange={this.handleInputMultipleParams} />
+        )}
+        {this.state.productType === "Furniture" && (
+          <Furniture
+            value={this.state.optionValue}
+            onChange={this.handleInputMultipleParams}
+          />
         )}
       </form>
     );
