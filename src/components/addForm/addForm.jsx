@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { createBrowserHistory } from "history";
 import { addProduct, fetchData } from "../../api/productApi";
 
-import Book from "../book/book";
-import Disk from "../disk/disk";
-import Furniture from "../furniture/furniture";
-import s from "./addForm.module.scss";
+import { Book } from "../book/book";
+import { Disk } from "../disk/disk";
+import { Furniture } from "../furniture/furniture";
+// import s from "./addForm.module.scss";
+import { GeneralProduct } from "../generalProguct/generalProguct";
 const history = createBrowserHistory();
 
 export class AddForm extends Component {
@@ -79,69 +80,11 @@ export class AddForm extends Component {
   render() {
     return (
       <form id="product_form" onSubmit={this.onSubmit}>
-        <div className={s.columnWrapper}>
-          <label>
-            {"SKU "}
-            <input
-              id="sku"
-              minLength={3}
-              required
-              autoComplete="off"
-              type="text"
-              value={this.state.sku}
-              onChange={this.handleInput}
-            />
-            {this.state.sameSkuError && (
-              <p className={s.priceError}>This SKU already exist!</p>
-            )}
-          </label>
-          <label>
-            {"NAME "}
-            <input
-              required
-              id="name"
-              type="text"
-              minLength={3}
-              value={this.state.name}
-              onChange={this.handleInput}
-            />
-          </label>
-          <label>
-            {"PRICE "}
-            <input
-              required=""
-              id="price"
-              type="number"
-              min={0}
-              value={this.state.price}
-              onChange={this.handleInput}
-            />{" "}
-            {this.state.priceError && (
-              <p className={s.priceError}> Price most be more than 0</p>
-            )}
-          </label>
-        </div>
-        <span>Type Switcher </span>
-        <select
-          required="required"
-          id="productType"
-          defaultValue={""}
-          onChange={this.handleSelect}
-        >
-          <option disabled="disabled" value={""}>
-            Choose Type...
-          </option>
-          <option id="DVD" value={"DVD"}>
-            DVD-Disk
-          </option>
-          <option id="Book" value={"Book"}>
-            Book
-          </option>
-          <option id="Furniture" value={"Furniture"}>
-            Furniture
-          </option>
-        </select>
-
+        <GeneralProduct
+          props={this.state}
+          handleInput={this.handleInput}
+          handleSelect={this.handleSelect}
+        />
         {this.state.productType === "DVD" && (
           <Disk onChange={this.handleInputMultipleParams} />
         )}
