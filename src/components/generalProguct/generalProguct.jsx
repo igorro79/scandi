@@ -1,25 +1,8 @@
 import React, { Component } from "react";
-// import { createBrowserHistory } from "history";
-// import { addProduct, fetchData } from "../../api/productApi";
 
 import s from "./generalProduct.module.scss";
-// const history = createBrowserHistory();
 
 export class GeneralProduct extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sku: "",
-      name: "",
-      price: "",
-      productType: "",
-      optionValue: "",
-      priceError: false,
-      sameSkuError: false,
-    };
-    this.handleInput = this.props.handleInput;
-  }
-
   render() {
     return (
       <>
@@ -32,10 +15,9 @@ export class GeneralProduct extends Component {
               required
               autoComplete="off"
               type="text"
-              value={this.props.sku}
-              onChange={this.handleInput}
+              onChange={this.props?.handleInput}
             />
-            {this.props.sameSkuError && (
+            {this.props.formState?.sameSkuError && (
               <p className={s.priceError}>This SKU already exist!</p>
             )}
           </label>
@@ -46,8 +28,7 @@ export class GeneralProduct extends Component {
               id="name"
               type="text"
               minLength={3}
-              value={this.props.name}
-              onChange={this.handleInput}
+              onChange={this.props.handleInput}
             />
           </label>
           <label>
@@ -57,10 +38,9 @@ export class GeneralProduct extends Component {
               id="price"
               type="number"
               min={0}
-              value={this.props.price}
-              onChange={this.handleInput}
+              onChange={this.props.handleInput}
             />{" "}
-            {this.props.priceError && (
+            {this.props.formState?.priceError && (
               <p className={s.priceError}> Price most be more than 0</p>
             )}
           </label>

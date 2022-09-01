@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles.scss";
 import { Container } from "../components/container/container";
 import { AddForm } from "../components/addForm/addForm";
+// import { GeneralProduct } from "../components/generalProguct/generalProguct";
 
 export const AddProduct = function () {
   const navigate = useNavigate();

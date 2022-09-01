@@ -3,10 +3,6 @@ import { GeneralProduct } from "../generalProguct/generalProguct";
 import s from "./disk.module.scss";
 
 export class Disk extends GeneralProduct {
-  constructor() {
-    super();
-    this.handleInput = this.props.handleInput;
-  }
   render() {
     return (
       <div>
@@ -18,8 +14,7 @@ export class Disk extends GeneralProduct {
             min={1}
             type="number"
             required
-            value={this.props.value}
-            onChange={this.handleInput}
+            onChange={this.props.handleInput}
           />
         </label>
       </div>

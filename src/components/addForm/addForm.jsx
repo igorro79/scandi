@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { createBrowserHistory } from "history";
-import { addProduct, fetchData } from "../../api/productApi";
+import * as api from "../../api/productApi";
 
+import { GeneralProduct } from "../generalProguct/generalProguct";
 import { Book } from "../book/book";
 import { Disk } from "../disk/disk";
 import { Furniture } from "../furniture/furniture";
-// import s from "./addForm.module.scss";
-import { GeneralProduct } from "../generalProguct/generalProguct";
-const history = createBrowserHistory();
 
+const history = createBrowserHistory();
 export class AddForm extends Component {
   constructor(props) {
     super(props);
@@ -30,14 +29,17 @@ export class AddForm extends Component {
       this.setState({ sameSkuError: true });
       return;
     }
-    if (this.state.price <= 0) this.setState({ priceError: true });
+    if (this.state.price <= 0) {
+      this.setState({ priceError: true });
+      return;
+    }
 
     const formatValue =
       this.state.productType === "Furniture"
         ? `${Object.values(this.state.optionValue).join("x")}`
         : `${Object.values(this.state.optionValue)}`;
 
-    addProduct({
+    api.addProduct({
       sku: this.state.sku,
       name: this.state.name,
       price: this.state.price,
@@ -73,7 +75,7 @@ export class AddForm extends Component {
   };
 
   async componentDidMount() {
-    const data = await fetchData();
+    const data = await api.fetchData();
     this.setState({ data: data.data });
   }
 
@@ -81,21 +83,19 @@ export class AddForm extends Component {
     return (
       <form id="product_form" onSubmit={this.onSubmit}>
         <GeneralProduct
-          props={this.state}
+          formState={this.state}
           handleInput={this.handleInput}
           handleSelect={this.handleSelect}
         />
+
         {this.state.productType === "DVD" && (
-          <Disk onChange={this.handleInputMultipleParams} />
+          <Disk handleInput={this.handleInputMultipleParams} />
         )}
         {this.state.productType === "Book" && (
-          <Book onChange={this.handleInputMultipleParams} />
+          <Book handleInput={this.handleInputMultipleParams} />
         )}
         {this.state.productType === "Furniture" && (
-          <Furniture
-            // value={this.state.optionValue}
-            onChange={this.handleInputMultipleParams}
-          />
+          <Furniture handleInput={this.handleInputMultipleParams} />
         )}
       </form>
     );
