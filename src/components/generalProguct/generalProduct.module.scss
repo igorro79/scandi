@@ -1,0 +1,30 @@
+form {
+  border: 2px dashed #000;
+  padding: 30px 50px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.columnWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+label,
+select {
+  margin-bottom: 20px;
+}
+input {
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+span {
+  margin-right: 40px;
+}
+
+.priceError {
+  font-size: 10px;
+  color: red;
+  margin-left: 70px;
+}

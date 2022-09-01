@@ -1,11 +1,8 @@
 import React from "react";
 import s from "./book.module.scss";
+import { GeneralProduct } from "../generalProguct/generalProguct";
 
-class Book extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { optionType: "KG", weight: "" };
-  }
+export class Book extends GeneralProduct {
   render() {
     return (
       <div className={s.columnWrapper}>
@@ -17,13 +14,10 @@ class Book extends React.Component {
             min={1}
             type="number"
             required
-            value={this.props?.value}
-            onChange={this.props?.onChange}
+            onChange={this.props.handleInput}
           />
         </label>
       </div>
     );
   }
 }
-
-export default Book;

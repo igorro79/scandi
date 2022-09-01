@@ -12,7 +12,6 @@ export async function fetchData() {
 }
 export async function removeProducts(array) {
   try {
-    console.log(array);
     await axios.delete("/", { data: { array } });
   } catch (error) {
     console.log(error);
