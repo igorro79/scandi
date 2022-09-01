@@ -31,7 +31,7 @@ export class Furniture extends GeneralProduct {
         <label>
           {"Length (CM)   "}
           <input
-            id="lenght"
+            id="length"
             min={1}
             required
             type="number"
